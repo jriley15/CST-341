@@ -9,21 +9,15 @@ import com.gcu.data.tables.Users;
 
 public class DatabaseContext {
 
-	//jdbc driver
-	static final String JDBC_DRIVER = "com.mysql.jdbc.Driver";
 	
-	
-	//sql server credentials
-	private static final String server = "";
-	private static final String username = "";
-	private static final String password = "";
-	
-	
-	//sql connection
+	//db url
+	private static final String server = "jdbc:derby:C:/Users/Jordan/MyDB;user=admin;password=password";
+
+	//db connection
 	private Connection connection;
 	
 	//tables
-	public Table<User> users;
+	public Users users;
 
 
 	public DatabaseContext() {
@@ -31,28 +25,28 @@ public class DatabaseContext {
 		//create connection
 		 try {
 		      //STEP 2: Register JDBC driver
-		      Class.forName(JDBC_DRIVER);
+			 	Class.forName("org.apache.derby.jdbc.EmbeddedDriver").newInstance();
 
 		      //STEP 3: Open a connection
-		      connection = DriverManager.getConnection(server, username, password);
+		      connection = DriverManager.getConnection(server);
 
 		
 		      users = new Users(connection);
+		      
 		
 		 } catch (Exception e) {
 			 e.printStackTrace();
 		 }
-
-
 	}
 	
-	
-	
-	
-	
-	
-	
-	
+	public void close() {
+		
+		try {
+			this.connection.close();
+		} catch (Exception e) {
+			
+		}
+	}
 	
 	
 }

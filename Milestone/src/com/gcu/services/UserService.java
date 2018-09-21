@@ -5,41 +5,54 @@ import com.gcu.data.dto.LoginRequest;
 import com.gcu.data.dto.RegisterRequest;
 import com.gcu.data.entity.User;
 
-public class UserService {
+public class UserService extends Service {
 
-	
-	DatabaseContext dbContext;
 
 	public UserService() {
 
-		dbContext = new DatabaseContext();
+		super();
 		
 	}
 
 	public int Register(RegisterRequest request) {
 		
 		//check if email already exists in db
-		
-		//hardcoded check to approve regsitration
-		if (request.getEmail().equalsIgnoreCase("admin@gcu.edu")) {
-			return 0;
+		if (!dbContext.users.emailExists(request.getEmail())) {
+			
+			User user = new User(0, request.getFirstName(), request.getLastName(), request.getEmail(), request.getPassword());
+			
+			//insert user
+			boolean created = dbContext.users.create(user);
+			
+			//close connection
+			dbContext.close();
+			
+			if (created) {
+				
+				//success
+				return 0;
+			}
+			
+			//error inserting
+			return 2;
+			
 		}
+		
+		
 		return 1;
 	}
 	
 	
 	public User Login(LoginRequest request) {
 		
-		User user = null;
+		User user = dbContext.users.validate(request);
+		dbContext.close();
 		
-		dbContext.users.create(null);
-		
-		//hardcoded user for login approval
-		if (request.getEmail().equalsIgnoreCase("admin@gcu.edu") && request.getPassword().equalsIgnoreCase("password")) {		
-			user = new User(0, "", "", request.getEmail(), request.getPassword());
-		}
 		return user;
+		
 	}
+	
+	
 	
 
 	

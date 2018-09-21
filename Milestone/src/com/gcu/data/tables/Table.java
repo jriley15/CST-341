@@ -1,8 +1,6 @@
 package com.gcu.data.tables;
 
 import java.util.ArrayList;
-
-import com.gcu.data.entity.Entity;
 import java.sql.*;
 
 
@@ -10,8 +8,6 @@ public abstract class Table<T> {
 
 	
 	protected Connection connection;
-
-	protected String name;
 
 	public Table(Connection c) {
 		this.connection = c;

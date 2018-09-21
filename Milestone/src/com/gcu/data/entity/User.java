@@ -1,7 +1,7 @@
 package com.gcu.data.entity;
 
 
-public class User extends Entity {
+public class User {
 
 	private int id;
 	private String firstName;

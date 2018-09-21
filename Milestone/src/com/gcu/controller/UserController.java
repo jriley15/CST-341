@@ -83,7 +83,7 @@ public class UserController {
 			if (user != null) {
 				
 				//return success view
-				return new ModelAndView("home", "model", new Home("Successfully logged in"));
+				return new ModelAndView("home", "model", new Home("Successfully logged in as: ["+user.getId()+"] - "+user.getEmail()));
 				
 			} else {
 				
