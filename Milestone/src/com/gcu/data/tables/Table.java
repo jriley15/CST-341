@@ -4,6 +4,8 @@ import java.util.ArrayList;
 import java.sql.*;
 
 
+//generic table abstract class (contains crud functions and connection object)
+
 public abstract class Table<T> {
 
 	

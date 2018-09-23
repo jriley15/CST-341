@@ -7,6 +7,7 @@ import com.gcu.data.entity.User;
 import com.gcu.data.tables.Table;
 import com.gcu.data.tables.Users;
 
+//db context class (resembles complete database object for services to use)
 public class DatabaseContext {
 
 	
@@ -19,19 +20,20 @@ public class DatabaseContext {
 	//tables
 	public Users users;
 
-
+	//constructor
 	public DatabaseContext() {
 
-		//create connection
+		//try catch 
 		 try {
-		      //STEP 2: Register JDBC driver
+		      //Register JDBC driver
 			 	Class.forName("org.apache.derby.jdbc.EmbeddedDriver").newInstance();
 
-		      //STEP 3: Open a connection
+		      //Open a connection
 		      connection = DriverManager.getConnection(server);
 
-		
+		      //instantiate users table with db connection param
 		      users = new Users(connection);
+		      
 		      
 		
 		 } catch (Exception e) {
@@ -39,12 +41,13 @@ public class DatabaseContext {
 		 }
 	}
 	
+	//function to close connection
 	public void close() {
 		
 		try {
 			this.connection.close();
 		} catch (Exception e) {
-			
+			e.printStackTrace();
 		}
 	}
 	

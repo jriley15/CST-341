@@ -1,6 +1,7 @@
 package com.gcu.data.entity;
 
 
+//database model class for user
 public class User {
 
 	private int id;

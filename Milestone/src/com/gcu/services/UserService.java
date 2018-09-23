@@ -5,6 +5,8 @@ import com.gcu.data.dto.LoginRequest;
 import com.gcu.data.dto.RegisterRequest;
 import com.gcu.data.entity.User;
 
+
+//user service class
 public class UserService extends Service {
 
 
@@ -14,21 +16,22 @@ public class UserService extends Service {
 		
 	}
 
+	//register function
 	public int Register(RegisterRequest request) {
 		
 		//check if email already exists in db
 		if (!dbContext.users.emailExists(request.getEmail())) {
 			
+			//create user object entity 
 			User user = new User(0, request.getFirstName(), request.getLastName(), request.getEmail(), request.getPassword());
 			
 			//insert user
 			boolean created = dbContext.users.create(user);
 			
 			//close connection
-			dbContext.close();
+			//dbContext.close();
 			
 			if (created) {
-				
 				//success
 				return 0;
 			}
@@ -38,16 +41,21 @@ public class UserService extends Service {
 			
 		}
 		
-		
+		//email exists
 		return 1;
 	}
 	
-	
+	//login function
 	public User Login(LoginRequest request) {
 		
+		//attempt to find user in db with user/pass
 		User user = dbContext.users.validate(request);
-		dbContext.close();
 		
+		//close db
+		//dbContext.close();
+		
+		
+		//return user object (null if didn't find)
 		return user;
 		
 	}

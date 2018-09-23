@@ -1,7 +1,11 @@
 package com.gcu.data.dto;
 
+
+//home view model (contains message string for notifying user when actions are successful)
 public class Home {
 
+	
+	//message field
 	private String message;
 
 

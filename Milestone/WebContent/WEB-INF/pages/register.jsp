@@ -13,7 +13,7 @@
 	<h2>Registration</h2>
 	<form:form method="POST" action="doRegister" modelAttribute="request">
 
-		<!-- <form:errors path="*"/> -->
+		<form:errors path="*"/>
 
 		<table>
 			<tr>

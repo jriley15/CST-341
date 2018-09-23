@@ -3,7 +3,6 @@
 
 <tiles-definitions>
 
-
 	<definition name="home" extends="DefaultTemplate">
     	<put-attribute name="body" value="/WEB-INF/pages/home.jsp" />
 	</definition>
