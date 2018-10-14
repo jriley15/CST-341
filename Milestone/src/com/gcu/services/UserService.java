@@ -7,7 +7,7 @@ import com.gcu.data.entity.User;
 
 
 //user service class
-public class UserService extends Service {
+public class UserService extends Service implements IUserService {
 
 
 	public UserService() {
@@ -20,13 +20,13 @@ public class UserService extends Service {
 	public int Register(RegisterRequest request) {
 		
 		//check if email already exists in db
-		if (!dbContext.users.emailExists(request.getEmail())) {
+		if (!dbContext.getUsers().emailExists(request.getEmail())) {
 			
 			//create user object entity 
 			User user = new User(0, request.getFirstName(), request.getLastName(), request.getEmail(), request.getPassword());
 			
 			//insert user
-			boolean created = dbContext.users.create(user);
+			boolean created = dbContext.getUsers().create(user);
 			
 			//close connection
 			//dbContext.close();
@@ -49,7 +49,7 @@ public class UserService extends Service {
 	public User Login(LoginRequest request) {
 		
 		//attempt to find user in db with user/pass
-		User user = dbContext.users.validate(request);
+		User user = dbContext.getUsers().validate(request);
 		
 		//close db
 		//dbContext.close();

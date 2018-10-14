@@ -11,12 +11,12 @@ import com.gcu.data.entity.User;
 
 
 //users table class (inherits table class)
-public class Users extends Table<User> {
+public class Users extends Table implements IUsers {
 
 	
 	//constructor (call super class constructor and pass connection to it)
-	public Users(Connection c) {
-		super(c);
+	public Users() {
+		super();
 	}
 
 	@Override
@@ -52,29 +52,7 @@ public class Users extends Table<User> {
 		return false;
 	}
 
-	@Override
-	public ArrayList<User> getAll() {
-		//not implemented yet
-		return null;
-	}
 
-	@Override
-	public User getOne(int id) {
-		//not implemented yet
-		return null;
-	}
-
-	@Override
-	public boolean update(User e) {
-		//not implemented yet
-		return false;
-	}
-
-	@Override
-	public boolean delete(int id) {
-		//not implemented yet
-		return false;
-	}
 
 	//validates a login request against the db
 	public User validate(LoginRequest request) {
@@ -156,5 +134,6 @@ public class Users extends Table<User> {
 		return false;
 
 	}
+
 
 }

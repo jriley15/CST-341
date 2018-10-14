@@ -3,12 +3,16 @@ package com.gcu.data;
 import java.sql.Connection;
 import java.sql.DriverManager;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.gcu.data.entity.User;
+import com.gcu.data.tables.IMessages;
+import com.gcu.data.tables.IUsers;
 import com.gcu.data.tables.Table;
 import com.gcu.data.tables.Users;
 
 //db context class (resembles complete database object for services to use)
-public class DatabaseContext {
+public class DatabaseContext implements IDatabaseContext {
 
 	
 	//db url
@@ -18,7 +22,8 @@ public class DatabaseContext {
 	private Connection connection;
 	
 	//tables
-	public Users users;
+	public IUsers users;
+	public IMessages messages;
 
 	//constructor
 	public DatabaseContext() {
@@ -32,7 +37,7 @@ public class DatabaseContext {
 		      connection = DriverManager.getConnection(server);
 
 		      //instantiate users table with db connection param
-		      users = new Users(connection);
+		      //users = new Users(connection);
 		      
 		      
 		
@@ -51,5 +56,24 @@ public class DatabaseContext {
 		}
 	}
 	
+	@Autowired
+	public void setUsers(IUsers users) {
+		this.users = users;
+		this.users.setConnection(connection);
+	}
+	
+	@Autowired
+	public void setMessages(IMessages messages) {
+		this.messages = messages;
+		this.messages.setConnection(connection);
+	}
+	
+	public IUsers getUsers() {
+		return this.users;
+	}
+
+	public IMessages getMessages() {
+		return this.messages;
+	}
 	
 }

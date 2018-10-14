@@ -1,6 +1,9 @@
 package com.gcu.controller;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
+
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.ObjectError;
@@ -12,6 +15,7 @@ import com.gcu.data.dto.Home;
 import com.gcu.data.dto.LoginRequest;
 import com.gcu.data.dto.RegisterRequest;
 import com.gcu.data.entity.User;
+import com.gcu.services.IUserService;
 import com.gcu.services.UserService;
 
 
@@ -19,10 +23,11 @@ import com.gcu.services.UserService;
 @RequestMapping("/user")
 public class UserController {
 
-	public UserService userService;
+	public IUserService userService;
 	
+
 	public UserController() {
-		userService = new UserService();
+
 	}
 	
 	//register view end point
@@ -76,8 +81,9 @@ public class UserController {
 	
 	//do login post action end point
 	@RequestMapping(path = "/doLogin", method = RequestMethod.POST) 
-	public ModelAndView doLogin(@Valid @ModelAttribute("request") LoginRequest request, BindingResult result) {
+	public ModelAndView doLogin(@Valid @ModelAttribute("request") LoginRequest request, BindingResult result, HttpSession session) {
 		
+
 		//check for validation errors
 		if (!result.hasErrors()) {
 			
@@ -85,9 +91,12 @@ public class UserController {
 			User user = userService.Login(request);
 			if (user != null) {
 				
+				//store user object in session
+				session.setAttribute("user", user);
+
 				//return success view
 				return new ModelAndView("home", "model", new Home("Successfully logged in as: ["+user.getId()+"] - "+user.getEmail()));
-			
+
 			//invalid user/pass	
 			} else {
 				
@@ -101,6 +110,22 @@ public class UserController {
 		return new ModelAndView("login", "request", request);
 	}
 	
+	//logout route
+	@RequestMapping(path = "/logout", method = RequestMethod.GET) 
+	public String logout(HttpSession session) {
+		
+		//clear session
+		session.invalidate();
+		
+		//redirect to login page
+		return "redirect:/login";
+	}
 	
+	
+	
+	@Autowired
+	public void setUserService(IUserService userService) {
+		this.userService = userService;
+	}
 	
 }

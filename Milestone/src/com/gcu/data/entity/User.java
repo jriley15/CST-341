@@ -10,7 +10,6 @@ public class User {
 	private String email;
 	private String password;
 	
-
 	public User() {
 		this.id = -1;
 		this.firstName = "";
@@ -67,10 +66,4 @@ public class User {
 		this.password = password;
 	}
 
-
-
-		
-
-
-	
 }

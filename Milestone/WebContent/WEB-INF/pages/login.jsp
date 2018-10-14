@@ -1,41 +1,52 @@
-
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
 <style>
+span {
+	color: red;
+}
 
-	span {
-	
-		color: red;
-	}
+.form-group {
+	text-align: left;
+}
+
+
+
+
 </style>
 
-<body>
-	<h2>Login</h2>
-	<form:form method="POST" action="doLogin" modelAttribute="request">
+<div class="container">
+	<div class="row">
+		<div class="col-sm-9 col-md-7 col-lg-5 mx-auto">
+			<div class="card card-signin my-5">
+				<div class="card-body">
+					<h5 class="card-title text-center">Sign In</h5>
 
-		<form:errors path="*"/>
-		<table>
-			<tr>
-				<td><form:label path="email">Email Address</form:label></td>
-				<td>
-					<form:input path="email"/>
-					<br>
-					<form:errors path="email"/>
-				 </td>
-			</tr>
-			<tr>
-				<td><form:label path="password">Password</form:label></td>
-				<td>
-					<form:password path="password"/>
-					<br>
-					<form:errors path="password"/>
-				 </td>
-			</tr>
+					<form:form method="POST" action="doLogin" modelAttribute="request">
+					
+						<form:errors path="*" />
+						
+						<div class="form-group">
+							<label for="email">Email</label>
+							<form:input path="email" cssClass="form-control" placeholder="Email address" required="required" id="email" autofocus="autofocus" value="test@live.com" /> 
+							<form:errors path="email" />
+						</div>
 
-	
-		</table>
-		<br>
-		<input type="submit" value="Submit" />
-	</form:form>
+						<div class="form-group">
+						
+							<label for="password">Password</label>
+							<form:password path="password" cssClass="form-control" placeholder="Password" required="required" id="password" value="password" /> 
+							
+							<form:errors path="password" />
+						</div>
 
-</body>
+						<button class="btn btn-dark btn btn-lg btn-primary btn-block text-uppercase" type="submit">Sign in</button>
+
+						<hr class="my-4">
+
+					</form:form>
+				</div>
+
+			</div>
+		</div>
+	</div>
+</div>

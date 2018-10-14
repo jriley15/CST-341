@@ -35,7 +35,7 @@ public class RegisterRequest {
 		return this.password.equals(this.passwordConfirm);
 	}
 
-	public RegisterRequest(@NotNull @Size @Size(min = 3, max = 30) String firstName,
+	public RegisterRequest(@NotNull @Size(min = 3, max = 30) String firstName,
 			@NotNull @Size(min = 3, max = 30) String lastName, @NotNull @Email String email,
 			@NotNull @Size(min = 3, max = 30) String password,
 			@NotNull @Size(min = 3, max = 30) String passwordConfirm) {

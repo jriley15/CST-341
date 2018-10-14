@@ -3,6 +3,7 @@
 
 <tiles-definitions>
 
+	<!-- 
 	<definition name="home" extends="DefaultTemplate">
     	<put-attribute name="body" value="/WEB-INF/pages/home.jsp" />
 	</definition>
@@ -12,5 +13,11 @@
 	<definition name="login" extends="DefaultTemplate">
     	<put-attribute name="body" value="/WEB-INF/pages/login.jsp" />
 	</definition>
+	-->
+	
+	<definition name="*" extends="DefaultTemplate">
+    	<put-attribute name="body" value="/WEB-INF/pages/{1}.jsp" />
+	</definition>
+	
 	
 </tiles-definitions>

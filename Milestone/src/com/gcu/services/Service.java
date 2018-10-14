@@ -1,21 +1,25 @@
 package com.gcu.services;
 
+import org.springframework.beans.factory.annotation.Autowired;
+
 import com.gcu.data.DatabaseContext;
+import com.gcu.data.IDatabaseContext;
 
 //service parent class
 public class Service {
 
 	
 	//db context
-	protected DatabaseContext dbContext;
+	protected IDatabaseContext dbContext;
 
 	
 	public Service() {
 
-		
-		//instantiate new db context
-		dbContext = new DatabaseContext();
-		
+	}
+	
+	@Autowired
+	public void setdbContext(IDatabaseContext dbContext) {
+		this.dbContext = dbContext;
 	}
 
 	
