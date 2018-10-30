@@ -9,9 +9,6 @@ span {
 	text-align: left;
 }
 
-
-
-
 </style>
 
 <div class="container">
@@ -42,10 +39,8 @@ span {
 						<button class="btn btn-dark btn btn-lg btn-primary btn-block text-uppercase" type="submit">Sign in</button>
 
 						<hr class="my-4">
-
 					</form:form>
 				</div>
-
 			</div>
 		</div>
 	</div>
