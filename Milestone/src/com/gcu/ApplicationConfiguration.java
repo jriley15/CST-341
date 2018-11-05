@@ -1,5 +1,6 @@
 package com.gcu;
 
+import org.apache.tomcat.jdbc.pool.DataSource;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.context.annotation.Scope;
@@ -8,12 +9,12 @@ import org.springframework.context.annotation.ScopedProxyMode;
 import com.gcu.controller.ChatController;
 import com.gcu.controller.HomeController;
 import com.gcu.controller.UserController;
-import com.gcu.data.DatabaseContext;
-import com.gcu.data.IDatabaseContext;
-import com.gcu.data.tables.IMessages;
-import com.gcu.data.tables.IUsers;
-import com.gcu.data.tables.Messages;
-import com.gcu.data.tables.Users;
+import com.gcu.data.DataAccessInterface;
+import com.gcu.data.MessageDAO;
+import com.gcu.data.UserDAO;
+import com.gcu.data.dto.ChatMessage;
+import com.gcu.data.entity.Message;
+import com.gcu.data.entity.User;
 import com.gcu.services.ChatService;
 import com.gcu.services.IChatService;
 import com.gcu.services.IUserService;
@@ -73,28 +74,37 @@ public class ApplicationConfiguration {
 	 * 
 	 */
 	
-	@Bean(name="dbContext")
-	@Scope(value="request", proxyMode=ScopedProxyMode.TARGET_CLASS)
-	public IDatabaseContext getdbContext() {
+	
+	@Bean(name="userDAO")
+	@Scope(value="singleton", proxyMode=ScopedProxyMode.TARGET_CLASS)
+	public DataAccessInterface<User> getUserDAO() {
 		
-		return new DatabaseContext();
+		return new UserDAO();
 
 	}
 	
-	@Bean(name="usersTable")
-	@Scope(value="request", proxyMode=ScopedProxyMode.TARGET_CLASS)
-	public IUsers getUsersTable() {
+	@Bean(name="messageDAO")
+	@Scope(value="singleton", proxyMode=ScopedProxyMode.TARGET_CLASS)
+	public DataAccessInterface<ChatMessage> getMessageDAO() {
 		
-		return new Users();
+		return new MessageDAO();
 
 	}
 	
-	@Bean(name="messagesTable")
-	@Scope(value="request", proxyMode=ScopedProxyMode.TARGET_CLASS)
-	public IMessages getMessagesTable() {
-		
-		return new Messages();
-
+	
+	@Bean(name="dataSource", destroyMethod = "close")
+	@Scope(value="singleton", proxyMode=ScopedProxyMode.TARGET_CLASS)
+	public DataSource getDataSource()
+	{
+		DataSource dataSource = new DataSource(); // org.apache.tomcat.jdbc.pool.DataSource;
+	    dataSource.setDriverClassName("org.apache.derby.jdbc.EmbeddedDriver");
+	    dataSource.setUrl("jdbc:derby:C:/Users/Jordan/MyDB");
+	    dataSource.setUsername("admin");
+	    dataSource.setPassword("password"); 
+	    return dataSource;
 	}
+	
+	
+	
 	
 }
