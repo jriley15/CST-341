@@ -34,7 +34,7 @@ public class UserDAO extends Spring implements DataAccessInterface<User> {
 				u.getPassword(), 
 				u.getFirstName(), 
 				u.getLastName());
-
+		
 		return (result > 0);
 	}
 

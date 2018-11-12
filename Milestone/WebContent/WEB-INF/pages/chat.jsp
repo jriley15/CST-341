@@ -50,7 +50,7 @@
 					<li>
 						<c:if test="${sessionScope.user.id == message.userId}">
 							<a href="/Milestone/chat/viewMessage?messageId=${message.id}">[Edit]</a>
-							<a href="/Milestone/chat/deleteMessage?messageId=${message.id}">[Delete]</a>
+							<a href="/Milestone/chat/deleteMessage?messageId=${message.id}" onclick="return confirm('Are you sure?');">[Delete]</a>
 						</c:if>
 						<b>${message.displayName}:</b> ${message.content}
 						
