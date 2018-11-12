@@ -35,36 +35,7 @@ public class UserDAO extends Spring implements DataAccessInterface<User> {
 				u.getFirstName(), 
 				u.getLastName());
 
-		
 		return (result > 0);
-		
-		/*try {
-			//insert query
-			String query = "INSERT INTO MILESTONE.USERS (EMAIL, PASSWORD, FIRST_NAME, LAST_NAME)" + " values (?, ?, ?, ?)";
-
-			//prepared statement
-			PreparedStatement preparedStmt = connection.prepareStatement(query);
-			preparedStmt.setString(1, u.getEmail());
-			preparedStmt.setString(2, u.getPassword());
-			preparedStmt.setString(3, u.getFirstName());
-			preparedStmt.setString(4, u.getLastName());
-
-			//return rows affected from query
-			int rowsAffected = preparedStmt.executeUpdate();
-			
-			//close statement
-			preparedStmt.close();
-			
-			//return whether or not the row was inserted
-			return rowsAffected > 0;
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-
-		//error, return false
-		return false;*/
-
 	}
 
 	@Override
@@ -107,43 +78,6 @@ public class UserDAO extends Spring implements DataAccessInterface<User> {
 		
 		return user;
 		
-		/*try {
-
-			//select query
-			String query = "SELECT * FROM MILESTONE.USERS WHERE EMAIL = ?";
-
-			//prepared statement
-			PreparedStatement preparedStmt = connection.prepareStatement(query);
-			preparedStmt.setString(1, email);
-
-			//get result set for query execution
-			ResultSet rs = preparedStmt.executeQuery();
-			
-			//check if any results 
-			if (rs.next()) {
-				
-				//email does exist, return true
-				return true;
-			}
-
-			//close statement
-			preparedStmt.close();
-			
-
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-		
-		//email doesn't exist
-		return false;
-		
-		
-		return null;*/
 	}
 
-	
-	
-	
-	
-	
 }

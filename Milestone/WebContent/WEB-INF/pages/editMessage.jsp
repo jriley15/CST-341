@@ -40,36 +40,18 @@
 	</c:when>
 	<c:otherwise>
 	
-		<h2>Chat</h2>
-	
-		<div class="chat-container border rounded" id="chat-container">
+		<h2>Edit Message</h2>
 		
-			<ul>
-				<c:forEach items="${messages}" var="message">
-
-					<li>
-						<c:if test="${sessionScope.user.id == message.userId}">
-							<a href="/Milestone/chat/viewMessage?messageId=${message.id}">[Edit]</a>
-							<a href="/Milestone/chat/deleteMessage?messageId=${message.id}">[Delete]</a>
-						</c:if>
-						<b>${message.displayName}:</b> ${message.content}
-						
-					</li>
-					
-					<br>
-				</c:forEach>
-			</ul>
-		
-		</div>
-		
-		<form:form method="POST" action="sendMessage" modelAttribute="sendMessageRequest">
+		<form:form method="POST" action="editMessage" modelAttribute="editMessageRequest">
 			<table>
 				<tr>
 					<td>
 						<div class="input-group mb-3">
-						  <form:input path="message" cssClass="form-control msg-input" placeholder="Message" aria-label="Message" aria-describedby="button-addon2" required="required" />
+						  <form:input path="message" cssClass="form-control msg-input" placeholder="Message" aria-label="Message" aria-describedby="button-addon2" required="required" value="${editMessageRequest.message}" />
+						  	<form:hidden path="id" value="${editMessageRequest.id}" />
+						  
 						  <div class="input-group-append">
-						    <button class="btn btn-outline-primary" type="submit" id="button-addon2">Send</button>
+						    <button class="btn btn-outline-primary" type="submit" id="button-addon2">Save</button>
 						  </div>
 						</div>
 						<form:errors path="message" class="error" />
@@ -79,6 +61,10 @@
 			</table>
 			<br>
 		</form:form>
+		
+				
+		<a href="/Milestone/chat/">Back to chat</a>
+		
 	</c:otherwise>
 </c:choose>
 

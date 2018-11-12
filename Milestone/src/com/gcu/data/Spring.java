@@ -7,7 +7,6 @@ import org.springframework.jdbc.core.JdbcTemplate;
 //parent spring class for containing datasource and spring jdbc template
 public class Spring {
 
-	
 	//data access variables
 	protected DataSource dataSource;
 	protected JdbcTemplate jdbcTemplate;
@@ -18,9 +17,5 @@ public class Spring {
 		this.dataSource = dataSource;
 		this.jdbcTemplate = new JdbcTemplate(dataSource);
 	}
-	
-	
-	
-	
-	
+
 }

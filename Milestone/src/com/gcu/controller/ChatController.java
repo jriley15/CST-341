@@ -13,9 +13,11 @@ import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import com.gcu.data.dto.ChatMessage;
+import com.gcu.data.dto.EditMessageRequest;
 import com.gcu.data.dto.Home;
 import com.gcu.data.dto.LoginRequest;
 import com.gcu.data.dto.SendMessageRequest;
@@ -97,6 +99,98 @@ public class ChatController {
 				model.addObject("sendMessageRequest", request);
 			}
 			
+			model.addObject("messages", chatService.getMessages());
+		} else {
+			List<String> errors = new ArrayList<String>();
+			errors.add("You must be logged in to view this page.");
+			model.addObject("errors", errors);
+		}
+
+		//return login view with errors
+		return model;
+	}
+	
+	@RequestMapping(path = "deleteMessage", method = RequestMethod.GET) 
+	public ModelAndView deleteMessage(@RequestParam("messageId") int messageId, HttpSession session) {
+	
+		User user = (User) session.getAttribute("user");
+		
+		ModelAndView model = new ModelAndView();
+		model.setViewName("chat"); 
+		
+		if (user != null) {
+			
+			//delete message
+			if (chatService.deleteMessage(user, messageId)) {
+				return displayChat(session);
+			}
+			
+			List<String> errors = new ArrayList<String>();
+			errors.add("Error deleting message.");
+			model.addObject("errors", errors);
+			
+		} else {
+			List<String> errors = new ArrayList<String>();
+			errors.add("You must be logged in to view this page.");
+			model.addObject("errors", errors);	
+		}
+		return model;	
+	}
+	
+	@RequestMapping(path = "viewMessage", method = RequestMethod.GET) 
+	public ModelAndView viewMessage(@RequestParam("messageId") int messageId, HttpSession session) {
+	
+		User user = (User) session.getAttribute("user");
+		
+		ModelAndView model = new ModelAndView();
+		model.setViewName("editMessage"); 
+		
+		if (user != null) {
+			
+			ChatMessage message = chatService.getMessage(user, messageId);
+			if (message != null) {
+
+				EditMessageRequest editMessageRequest = new EditMessageRequest(messageId, message.getContent());				
+				model.addObject("editMessageRequest", editMessageRequest);
+			} else {
+				List<String> errors = new ArrayList<String>();
+				errors.add("Error viewing message.");
+				model.addObject("errors", errors);
+			}
+			
+		} else {
+			List<String> errors = new ArrayList<String>();
+			errors.add("You must be logged in to view this page.");
+			model.addObject("errors", errors);
+		}
+		
+		return model;
+	}
+	
+	
+	@RequestMapping(path = "/editMessage", method = RequestMethod.POST) 
+	public ModelAndView editMessage(@Valid @ModelAttribute("editMessageRequest") EditMessageRequest request, BindingResult result, HttpSession session) {
+		
+		User user = (User) session.getAttribute("user");
+		
+		ModelAndView model = new ModelAndView();
+		model.setViewName("chat"); 
+		
+		if (user != null) {
+			
+			//check for validation errors
+			if (!result.hasErrors()) {
+				
+				model.addObject("sendMessageRequest", new SendMessageRequest());
+				
+				if (!chatService.editMessage(user, request)) {
+
+					ObjectError error = new ObjectError("*","Error saving message");
+					result.addError(error);
+				}
+			} else {
+				model.addObject("sendMessageRequest", request);
+			}
 			
 			model.addObject("messages", chatService.getMessages());
 		} else {
@@ -107,9 +201,8 @@ public class ChatController {
 
 		//return login view with errors
 		return model;
-		
-
 	}
+	
 	
 	@Autowired
 	public void setChatService(IChatService chatService) {

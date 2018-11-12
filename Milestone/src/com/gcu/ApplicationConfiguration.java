@@ -53,7 +53,7 @@ public class ApplicationConfiguration {
 	 */
 	
 	@Bean(name="userService")
-	@Scope(value="request", proxyMode=ScopedProxyMode.TARGET_CLASS)
+	@Scope(value="singleton", proxyMode=ScopedProxyMode.TARGET_CLASS)
 	public IUserService getUserService() {
 		
 		return new UserService();
@@ -61,7 +61,7 @@ public class ApplicationConfiguration {
 	}
 	
 	@Bean(name="chatService")
-	@Scope(value="request", proxyMode=ScopedProxyMode.TARGET_CLASS)
+	@Scope(value="singleton", proxyMode=ScopedProxyMode.TARGET_CLASS)
 	public IChatService getChatService() {
 		
 		return new ChatService();

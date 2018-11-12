@@ -15,6 +15,11 @@ public class ChatMessage extends Message {
 		this.displayName = displayName;
 	}
 
+	public ChatMessage() {
+		super();
+		// TODO Auto-generated constructor stub
+	}
+
 	public String getDisplayName() {
 		return displayName;
 	}

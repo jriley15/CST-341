@@ -22,6 +22,10 @@ public class Message {
 		this.createdOn = createdOn;
 	}
 
+	public Message() {
+		// TODO Auto-generated constructor stub
+	}
+
 	public int getId() {
 		return id;
 	}
