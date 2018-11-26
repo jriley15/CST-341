@@ -45,7 +45,7 @@ public class UserController {
 		if (!result.hasErrors()) {
 			
 			//call user service for further validation and account creation
-			int response = userService.Register(request);
+			int response = userService.register(request);
 			
 			//success
 			if (response == 0) {
@@ -88,7 +88,7 @@ public class UserController {
 		if (!result.hasErrors()) {
 			
 			//call user service for further validation and account creation
-			User user = userService.Login(request);
+			User user = userService.login(request);
 			if (user != null) {
 				
 				//store user object in session

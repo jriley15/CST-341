@@ -8,10 +8,10 @@ public interface IUserService {
 
 	
 		//register function
-		public int Register(RegisterRequest request);
+		public int register(RegisterRequest request);
 		
 		//login function
-		public User Login(LoginRequest request);
+		public User login(LoginRequest request);
 		
 
 	

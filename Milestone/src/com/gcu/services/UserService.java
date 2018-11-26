@@ -19,7 +19,7 @@ public class UserService implements IUserService {
 	
 	
 	//register function
-	public int Register(RegisterRequest request) {
+	public int register(RegisterRequest request) {
 		
 		//create user object entity 
 		User user = new User(0, request.getFirstName(), request.getLastName(), request.getEmail(), request.getPassword());
@@ -45,7 +45,7 @@ public class UserService implements IUserService {
 	}
 	
 	//login function
-	public User Login(LoginRequest request) {
+	public User login(LoginRequest request) {
 		
 		User user = new User(0, null, null, request.getEmail(), request.getPassword());
 		
