@@ -4,25 +4,37 @@
 <%@taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
 
 <style>
-.chat-container {
-	width: 500px;
-	height: 300px;
-	overflow-y: scroll;
-	text-align: left;
-	padding: 10px;
-	margin-bottom: 10px;
-	background-color: #f5f5f5;
-	border-color: #f5f5f5;
-}
-
-.error {
-	color: red;
-
-}
-.input-group {
-
-	width: 500px;
-}
+	.chat-container {
+		width: 500px;
+		height: 300px;
+		overflow-y: scroll;
+		text-align: left;
+		padding: 10px;
+		margin-bottom: 10px;
+		background-color: #f5f5f5;
+		border-color: #f5f5f5;
+	}
+	
+	.input-group {
+		width: 500px;
+	}
+	
+	
+	@media only screen and (max-width: 500px) {
+	
+	  	.chat-container {
+	  		width: 95%;
+	  	}
+	  	.input-group {
+			width: 100%;
+		}
+	  
+	}
+	
+	
+	.error {
+		color: red;
+	}
 
 
 </style>

@@ -4,6 +4,7 @@
 <html xmlns="http://www.w3.org/1999/xhtml">
 <head>
 	<title>GCU</title>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 	
 	 <link href="<c:url value="/resources/css/bootstrap.css" />" rel="stylesheet" />
 	 <link href="<c:url value="/resources/css/main.css" />" rel="stylesheet" />
@@ -17,7 +18,7 @@
 		<tiles:insertAttribute name="header" />
 	
 		<!-- Body Page -->
-		<div align="center">
+		<div class="container" align="center">
 			<tiles:insertAttribute name="body" />
 		</div>
 	
