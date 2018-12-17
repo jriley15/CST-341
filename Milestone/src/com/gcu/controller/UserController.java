@@ -18,114 +18,135 @@ import com.gcu.data.entity.User;
 import com.gcu.services.IUserService;
 import com.gcu.services.UserService;
 
-
-@Controller 
+@Controller
 @RequestMapping("/user")
 public class UserController {
 
 	public IUserService userService;
-	
 
 	public UserController() {
 
 	}
-	
-	//register view end point
-	@RequestMapping(path = "/register", method = RequestMethod.GET) 
+
+	// register view end point
+	/**
+	 * @return
+	 */
+	@RequestMapping(path = "/register", method = RequestMethod.GET)
 	public ModelAndView displayRegisterForm() {
-		
+
 		return new ModelAndView("register", "request", new RegisterRequest());
 	}
-	
-	//doRegister post action end point
-	@RequestMapping(path = "/doRegister", method = RequestMethod.POST) 
+
+	// doRegister post action end point
+	/**
+	 * @param request
+	 * @param result
+	 * @return
+	 */
+	@RequestMapping(path = "/doRegister", method = RequestMethod.POST)
 	public ModelAndView doRegister(@Valid @ModelAttribute("request") RegisterRequest request, BindingResult result) {
-		
-		//check if there are validation errors
+
+		// check if there are validation errors
 		if (!result.hasErrors()) {
-			
-			//call user service for further validation and account creation
+
+			// call user service for further validation and account creation
 			int response = userService.register(request);
-			
-			//success
+
+			// success
 			if (response == 0) {
-				
-				//return success view
+
+				// return success view
 				return new ModelAndView("home", "model", new Home("Successfully registered"));
-	
-			//email in use	
+
+				// email in use
 			} else if (response == 1) {
-				
-				ObjectError error = new ObjectError("*","Email already in use");
+
+				ObjectError error = new ObjectError("*", "Email already in use");
 				result.addError(error);
-				
-			//db insert error	
+
+				// db insert error
 			} else if (response == 2) {
-				
-				ObjectError error = new ObjectError("*","Error creating user");
+
+				ObjectError error = new ObjectError("*", "Error creating user");
 				result.addError(error);
-				
+
 			}
 		}
-		
-		//return registration view with errors
+
+		// return registration view with errors
 		return new ModelAndView("register", "request", request);
 	}
-	
-	//login view end point
-	@RequestMapping(path = "/login", method = RequestMethod.GET) 
+
+	// login view end point
+	/**
+	 * @return
+	 */
+	@RequestMapping(path = "/login", method = RequestMethod.GET)
 	public ModelAndView displayLoginForm() {
-		
+
 		return new ModelAndView("login", "request", new LoginRequest());
 	}
-	
-	//do login post action end point
-	@RequestMapping(path = "/doLogin", method = RequestMethod.POST) 
-	public ModelAndView doLogin(@Valid @ModelAttribute("request") LoginRequest request, BindingResult result, HttpSession session) {
-		
 
-		//check for validation errors
+	// do login post action end point
+	/**
+	 * @param request
+	 * @param result
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping(path = "/doLogin", method = RequestMethod.POST)
+	public ModelAndView doLogin(@Valid @ModelAttribute("request") LoginRequest request, BindingResult result,
+			HttpSession session) {
+
+		// check for validation errors
 		if (!result.hasErrors()) {
-			
-			//call user service for further validation and account creation
+
+			// call user service for further validation and account creation
 			User user = userService.login(request);
 			if (user != null) {
-				
-				//store user object in session
+
+				// store user object in session
 				session.setAttribute("user", user);
 
-				//return success view
-				return new ModelAndView("home", "model", new Home("Successfully logged in as: ["+user.getId()+"] - "+user.getEmail()));
+				// return success view
+				return new ModelAndView("home", "model",
+						new Home("Successfully logged in as: [" + user.getId() + "] - " + user.getEmail()));
 
-			//invalid user/pass	
+				// invalid user/pass
 			} else {
-				
-				ObjectError error = new ObjectError("*","Invalid username or password");
+
+				ObjectError error = new ObjectError("*", "Invalid username or password");
 				result.addError(error);
 			}
-			
+
 		}
-		
-		//return login view with errors
+
+		// return login view with errors
 		return new ModelAndView("login", "request", request);
 	}
-	
-	//logout route
-	@RequestMapping(path = "/logout", method = RequestMethod.GET) 
+
+	// logout route
+	/**
+	 * @param session
+	 * @return
+	 */
+	@RequestMapping(path = "/logout", method = RequestMethod.GET)
 	public String logout(HttpSession session) {
-		
-		//clear session
+
+		// clear session
 		session.invalidate();
-		
-		//redirect to login page
+
+		// redirect to login page
 		return "redirect:/login";
 	}
-	
-	
-	
+
+	/**
+	 * @param userService
+	 */
 	@Autowired
 	public void setUserService(IUserService userService) {
 		this.userService = userService;
 	}
-	
+
 }

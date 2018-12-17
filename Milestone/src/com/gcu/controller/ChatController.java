@@ -33,12 +33,10 @@ public class ChatController {
 	public IChatService chatService;
 	
 
-	public ChatController() {
-		
-	}
-
-	//chat view end point
-	
+	/**
+	 * @param session
+	 * @return
+	 */
 	@RequestMapping(path = "", method = RequestMethod.GET) 
 	public ModelAndView chat(HttpSession session) {
 		
@@ -46,6 +44,10 @@ public class ChatController {
 	}
 	
 
+	/**
+	 * @param session
+	 * @return
+	 */
 	@RequestMapping(path = "*", method = RequestMethod.GET) 
 	public ModelAndView displayChat(HttpSession session) {
 		
@@ -74,7 +76,13 @@ public class ChatController {
 		return model;
 	}
 	
-	//send message post action
+	/**
+	 * send message post action
+	 * @param request
+	 * @param result
+	 * @param session
+	 * @return
+	 */
 	@RequestMapping(path = "/sendMessage", method = RequestMethod.POST) 
 	public ModelAndView sendMessage(@Valid @ModelAttribute("sendMessageRequest") SendMessageRequest request, BindingResult result, HttpSession session) {
 		
@@ -118,6 +126,11 @@ public class ChatController {
 		return model;
 	}
 	
+	/**
+	 * @param messageId
+	 * @param session
+	 * @return
+	 */
 	@RequestMapping(path = "deleteMessage", method = RequestMethod.GET) 
 	public ModelAndView deleteMessage(@RequestParam("messageId") int messageId, HttpSession session) {
 	
@@ -153,6 +166,11 @@ public class ChatController {
 		return model;	
 	}
 	
+	/**
+	 * @param messageId
+	 * @param session
+	 * @return
+	 */
 	@RequestMapping(path = "viewMessage", method = RequestMethod.GET) 
 	public ModelAndView viewMessage(@RequestParam("messageId") int messageId, HttpSession session) {
 	
@@ -193,6 +211,12 @@ public class ChatController {
 	}
 	
 	
+	/**
+	 * @param request
+	 * @param result
+	 * @param session
+	 * @return
+	 */
 	@RequestMapping(path = "/editMessage", method = RequestMethod.POST) 
 	public ModelAndView editMessage(@Valid @ModelAttribute("editMessageRequest") EditMessageRequest request, BindingResult result, HttpSession session) {
 		
@@ -229,6 +253,9 @@ public class ChatController {
 	}
 	
 	
+	/**
+	 * @param chatService
+	 */
 	@Autowired
 	public void setChatService(IChatService chatService) {
 		this.chatService = chatService;

@@ -92,6 +92,12 @@ public class ApplicationConfiguration {
 	}
 	
 	
+	/*
+	 * 
+	 * Spring JDBC config
+	 * 
+	 */
+	
 	@Bean(name="dataSource", destroyMethod = "close")
 	@Scope(value="singleton", proxyMode=ScopedProxyMode.TARGET_CLASS)
 	public DataSource getDataSource()

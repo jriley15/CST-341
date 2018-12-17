@@ -15,6 +15,9 @@ public class HomeController {
 	
 	
 	//default end point
+	/**
+	 * @return
+	 */
 	@RequestMapping("*")
 	public ModelAndView displayHomeView() {
 		
